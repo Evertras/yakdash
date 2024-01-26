@@ -29,4 +29,3 @@ layout:
                 type: line
                 source:
                   file: ~/some/timeseries-data.csv
-
