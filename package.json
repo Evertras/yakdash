@@ -1,0 +1,6 @@
+{
+  "description": "Formatting tools for yakdash development",
+  "devDependencies": {
+    "prettier": "^3.2.4"
+  }
+}

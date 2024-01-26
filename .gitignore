@@ -1,1 +1,5 @@
+# Build outputs
 /bin
+
+# For prettier
+node_modules
