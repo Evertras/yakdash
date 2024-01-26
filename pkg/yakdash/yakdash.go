@@ -22,7 +22,7 @@ func New(layout layout.Root) model {
 }
 
 func (m model) Init() tea.Cmd {
-	return nil
+	return tea.EnterAltScreen
 }
 
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
