@@ -7,28 +7,17 @@ func (m Pane) recalculateDimensions() Pane {
 	}
 	width := m.width
 	height := m.height
-	var overflow int
 
 	if m.direction == DirectionVertical {
 		height = height / numChildren
-		overflow = height % numChildren
 	} else {
 		width = width / numChildren
-		overflow = width % numChildren
 	}
 
 	for i := range m.children {
 		// Shadow to allow adjustment below
 		height := height
 		width := width
-
-		if i == numChildren-1 {
-			if m.direction == DirectionVertical {
-				height += overflow
-			} else {
-				width += overflow
-			}
-		}
 
 		m.children[i] = m.children[i].WithDimensions(width, height)
 	}
