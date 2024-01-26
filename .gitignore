@@ -3,3 +3,7 @@
 
 # For prettier
 node_modules
+
+# Local env vars
+.envrc
+/.direnv
