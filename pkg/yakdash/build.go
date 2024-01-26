@@ -2,7 +2,6 @@ package yakdash
 
 import (
 	"github.com/evertras/yakdash/pkg/layout"
-	"github.com/evertras/yakdash/pkg/modules/clock"
 	"github.com/evertras/yakdash/pkg/panes"
 )
 
@@ -25,8 +24,7 @@ func New(l layout.Root) model {
 			return panes.NewNode(direction, children...)
 		}
 
-		// TODO: load module
-		return panes.NewLeaf(clock.New())
+		return panes.NewLeaf(loadModule(node))
 	}
 
 	for _, node := range l.Screens {
