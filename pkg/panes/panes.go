@@ -19,6 +19,8 @@ type Pane struct {
 	model     tea.Model
 	direction Direction
 
+	style lipgloss.Style
+
 	width  int
 	height int
 }
@@ -27,6 +29,8 @@ type Pane struct {
 func NewLeaf(m tea.Model) Pane {
 	return Pane{
 		model: m,
+		style: lipgloss.NewStyle().Background(lipgloss.Color(randomColorHex())).
+			Align(lipgloss.Center, lipgloss.Center),
 	}
 }
 
@@ -54,7 +58,19 @@ func (m Pane) WithDirection(direction Direction) Pane {
 }
 
 func (m Pane) Init() tea.Cmd {
-	return nil
+	var (
+		cmds []tea.Cmd
+	)
+
+	if m.model != nil {
+		cmds = append(cmds, m.model.Init())
+	} else {
+		for _, child := range m.children {
+			cmds = append(cmds, child.Init())
+		}
+	}
+
+	return tea.Batch(cmds...)
 }
 
 func (m Pane) Update(msg tea.Msg) (Pane, tea.Cmd) {
@@ -87,10 +103,7 @@ func randomColorHex() string {
 
 func (m Pane) View() string {
 	if m.model != nil {
-		style := lipgloss.NewStyle().
-			Width(m.width).Height(m.height).
-			Background(lipgloss.Color(randomColorHex())).
-			Align(lipgloss.Center, lipgloss.Center)
+		style := m.style.Copy().Width(m.width).Height(m.height)
 		return style.Render(m.model.View())
 	}
 

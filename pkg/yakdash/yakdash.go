@@ -14,7 +14,14 @@ type model struct {
 }
 
 func (m model) Init() tea.Cmd {
-	return tea.EnterAltScreen
+	var (
+		cmds []tea.Cmd
+	)
+
+	cmds = append(cmds, tea.EnterAltScreen)
+	cmds = append(cmds, m.rootPane.Init())
+
+	return tea.Batch(cmds...)
 }
 
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
