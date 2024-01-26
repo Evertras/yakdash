@@ -9,7 +9,14 @@
       let pkgs = nixpkgs.legacyPackages.${system}; in
       {
         devShells.default = pkgs.mkShell {
-          buildInputs = [ pkgs.hello ];
+          buildInputs = with pkgs; [
+            # 1.21.5
+            go
+
+            # For dev tools
+            nixfmt
+            nodejs_21
+          ];
         };
       }
     );
