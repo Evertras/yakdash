@@ -5,4 +5,8 @@ set -e
 # Go to root of repository from .git/hooks
 cd "${0%/*}/../.."
 
-make fmt
+files=$(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g')
+
+[ -z "$files" ] && exit 0
+
+echo "$files" | xargs npx prettier --ignore-unknown --write
