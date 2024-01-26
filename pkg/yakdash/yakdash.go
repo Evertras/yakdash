@@ -17,8 +17,11 @@ type model struct {
 func New(layout layout.Root) model {
 	return model{
 		layout: layout,
-		rootPane: panes.NewNode(panes.DirectionHorizontal,
-			panes.NewLeaf(clock.New()),
+		rootPane: panes.NewNode(panes.DirectionVertical,
+			panes.NewNode(panes.DirectionHorizontal,
+				panes.NewLeaf(clock.New()),
+				panes.NewLeaf(clock.New()),
+			),
 			panes.NewLeaf(clock.New()),
 		),
 	}
