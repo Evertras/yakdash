@@ -7,23 +7,48 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
+type Direction int
+
+const (
+	DirectionVertical Direction = iota
+	DirectionHorizontal
+)
+
 type Pane struct {
-	children []Pane
-	model    tea.Model
+	children  []Pane
+	model     tea.Model
+	direction Direction
 
 	width  int
 	height int
 }
 
-func NewModel(m tea.Model) Pane {
+// NewModel creates a new pane containing the given model.
+func NewLeaf(m tea.Model) Pane {
 	return Pane{
 		model: m,
+	}
+}
+
+// NewNode creates a new pane containing the given children.
+func NewNode(direction Direction, children ...Pane) Pane {
+	return Pane{
+		direction: direction,
+		children:  children,
 	}
 }
 
 func (m Pane) WithDimensions(width, height int) Pane {
 	m.width = width
 	m.height = height
+
+	m = m.recalculateDimensions()
+
+	return m
+}
+
+func (m Pane) WithDirection(direction Direction) Pane {
+	m.direction = direction
 
 	return m
 }
@@ -61,10 +86,27 @@ func randomColorHex() string {
 }
 
 func (m Pane) View() string {
-	style := lipgloss.NewStyle().Width(m.width).Height(m.height).Background(lipgloss.Color(randomColorHex()))
 	if m.model != nil {
+		style := lipgloss.NewStyle().
+			Width(m.width).Height(m.height).
+			Background(lipgloss.Color(randomColorHex())).
+			Align(lipgloss.Center, lipgloss.Center)
 		return style.Render(m.model.View())
 	}
 
-	return "NOT IMPLEMENTED"
+	childrenViews := make([]string, len(m.children))
+	for i, child := range m.children {
+		childrenViews[i] = child.View()
+	}
+
+	switch m.direction {
+	case DirectionVertical:
+		return lipgloss.JoinVertical(lipgloss.Top, childrenViews...)
+
+	case DirectionHorizontal:
+		return lipgloss.JoinHorizontal(lipgloss.Left, childrenViews...)
+
+	default:
+		panic("unknown direction")
+	}
 }
