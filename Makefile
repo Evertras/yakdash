@@ -1,6 +1,6 @@
 .PHONY: default
 default: git-hooks
-	go run ./cmd/yakdash/main.go
+	@go run ./cmd/yakdash/main.go
 
 bin/yakdash: git-hooks
 	go build -o bin/yakdash ./cmd/yakdash
