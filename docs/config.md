@@ -7,14 +7,14 @@ Configuration can be provided in YAML, JSON, or TOML.
 
 ## Layout
 
-Yakdash works in a similar manner to a tmux session.  There are
+Yakdash works in a similar manner to a tmux session. There are
 one or more screens, which include everything that should be
-shown at the same time.  Then there are panes, which divide up
+shown at the same time. Then there are panes, which divide up
 the screen to show different things.
 
 Panes can be nested within other panes to create more complex layouts.
 Panes follow flexbox rules, conforming to fill the space they're in
-given the ratio assigned.
+given the ratio assigned. If no size is given, it will default to 1.
 
 ```yaml
 layout:
@@ -34,20 +34,20 @@ layout:
         - stack: vertical
           size: 1
           children:
-          - name: Host metrics
-            module: host-metrics
-            config:
-              cpu:
-              memory:
-                unit: mb
-              disk:
-                unit: mb
-          - name: Weather
-            module: graph
-            config:
-              type: line
-              source:
-                file: ~/some/timeseries-data.csv
+            - name: Host metrics
+              module: host-metrics
+              config:
+                cpu:
+                memory:
+                  unit: mb
+                disk:
+                  unit: mb
+            - name: Weather
+              module: graph
+              config:
+                type: line
+                source:
+                  file: ~/some/timeseries-data.csv
 ```
 
 This will create a layout like:
@@ -63,4 +63,4 @@ This will create a layout like:
 |              |Weather |   1 (default)
 |              |        |
 -------------------------
-````
+```
