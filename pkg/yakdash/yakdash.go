@@ -4,7 +4,6 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 
 	"github.com/evertras/yakdash/pkg/layout"
-	"github.com/evertras/yakdash/pkg/modules/clock"
 	"github.com/evertras/yakdash/pkg/panes"
 )
 
@@ -12,19 +11,6 @@ type model struct {
 	layout layout.Root
 
 	rootPane panes.Pane
-}
-
-func New(layout layout.Root) model {
-	return model{
-		layout: layout,
-		rootPane: panes.NewNode(panes.DirectionVertical,
-			panes.NewNode(panes.DirectionHorizontal,
-				panes.NewLeaf(clock.New()),
-				panes.NewLeaf(clock.New()),
-			),
-			panes.NewLeaf(clock.New()),
-		),
-	}
 }
 
 func (m model) Init() tea.Cmd {

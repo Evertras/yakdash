@@ -13,8 +13,6 @@ shown at the same time. Then there are panes, which divide up
 the screen to show different things.
 
 Panes can be nested within other panes to create more complex layouts.
-Panes follow flexbox rules, conforming to fill the space they're in
-given the ratio assigned. If no size is given, it will default to 1.
 
 ```yaml
 layout:
@@ -25,14 +23,11 @@ layout:
       children:
         # Actual pane
         - name: Local time
-          # Takes up 2 out of the total of 3, using flexbox rules
-          size: 2
           module: clock
           config:
             tz: Asia/Tokyo
         # Pane including children stacked top to bottom
         - stack: vertical
-          size: 1
           children:
             - name: Host metrics
               module: host-metrics
