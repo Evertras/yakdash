@@ -1,0 +1,32 @@
+layout:
+  screens:
+    - name: Host info
+      # Stack from left to right
+      stack: horizontal
+      children:
+        # Actual pane
+        - name: Local time
+          # Takes up 2 out of the total of 3, using flexbox rules
+          size: 2
+          module: clock
+          config:
+            tz: Asia/Tokyo
+        # Pane including children stacked top to bottom
+        - stack: vertical
+          size: 1
+          children:
+            - name: Host metrics
+              module: host-metrics
+              config:
+                cpu:
+                memory:
+                  unit: mb
+                disk:
+                  unit: mb
+            - name: Weather
+              module: graph
+              config:
+                type: line
+                source:
+                  file: ~/some/timeseries-data.csv
+
