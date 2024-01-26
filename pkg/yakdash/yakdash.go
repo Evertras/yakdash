@@ -1,20 +1,23 @@
 package yakdash
 
 import (
-	"strings"
-
 	tea "github.com/charmbracelet/bubbletea"
 
 	"github.com/evertras/yakdash/pkg/layout"
+	"github.com/evertras/yakdash/pkg/modules/clock"
+	"github.com/evertras/yakdash/pkg/panes"
 )
 
 type model struct {
 	layout layout.Root
+
+	rootPane panes.Pane
 }
 
 func New(layout layout.Root) model {
 	return model{
-		layout: layout,
+		layout:   layout,
+		rootPane: panes.NewModel(clock.New()),
 	}
 }
 
@@ -35,42 +38,46 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m model) View() string {
-	builder := strings.Builder{}
-	ws := func(s string) {
-		builder.WriteString(s)
-	}
-	endline := func() {
-		builder.WriteString("\n")
-	}
-
-	var printNode func(node layout.Node, depth int)
-	printNode = func(node layout.Node, depth int) {
-		indented := func() {
-			for i := 0; i < depth; i++ {
-				ws(" ")
-			}
+	/*
+		builder := strings.Builder{}
+		ws := func(s string) {
+			builder.WriteString(s)
+		}
+		endline := func() {
+			builder.WriteString("\n")
 		}
 
-		indented()
-		ws("- Node: ")
-		ws(node.Name)
-		endline()
-
-		if len(node.Children) > 0 {
-			for _, node := range node.Children {
-				printNode(node, depth+2)
+		var printNode func(node layout.Node, depth int)
+		printNode = func(node layout.Node, depth int) {
+			indented := func() {
+				for i := 0; i < depth; i++ {
+					ws(" ")
+				}
 			}
-		} else {
+
 			indented()
-			ws("  Module: ")
-			ws(node.Module)
+			ws("- Node: ")
+			ws(node.Name)
 			endline()
+
+			if len(node.Children) > 0 {
+				for _, node := range node.Children {
+					printNode(node, depth+2)
+				}
+			} else {
+				indented()
+				ws("  Module: ")
+				ws(node.Module)
+				endline()
+			}
 		}
-	}
 
-	for _, node := range m.layout.Screens {
-		printNode(node, 0)
-	}
+		for _, node := range m.layout.Screens {
+			printNode(node, 0)
+		}
 
-	return builder.String()
+		return builder.String()
+	*/
+
+	return m.rootPane.View()
 }
