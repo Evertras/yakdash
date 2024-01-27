@@ -115,6 +115,16 @@ func TestViewTitleIsShown(t *testing.T) {
 	assert.Equal(t, expectedView, pane.View())
 }
 
+func TestViewNoTitleShowsBorderProperly(t *testing.T) {
+	const expectedView = `╭────────╮
+│testing │
+╰────────╯`
+	dummy := newDummyModel("testing", nil, nil)
+	pane := panes.NewLeaf(dummy).WithDimensions(10, 3)
+
+	assert.Equal(t, expectedView, pane.View())
+}
+
 func TestViewRemovingTitleShowsBorderProperly(t *testing.T) {
 	const expectedView = `╭────────╮
 │testing │

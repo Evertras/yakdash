@@ -27,7 +27,7 @@ type Pane struct {
 
 // NewModel creates a new pane containing the given model.
 func NewLeaf(m tea.Model) Pane {
-	borderStyle := lipgloss.NewStyle().Border(lipgloss.RoundedBorder()).BorderTop(false)
+	borderStyle := lipgloss.NewStyle().Border(lipgloss.RoundedBorder())
 
 	return Pane{
 		model: m,
