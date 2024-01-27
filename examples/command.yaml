@@ -1,0 +1,13 @@
+layout:
+  screens:
+    - stack: vertical
+      children:
+        - name: Hostname
+          module: command
+          config:
+            bash: hostname
+        - name: Date
+          module: command
+          config:
+            interval: 5s
+            bash: date
