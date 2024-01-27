@@ -25,6 +25,15 @@ type Pane struct {
 	height int
 }
 
+func randomColorHex() string {
+	hexes := []rune("012345")
+	color := "#"
+	for i := 0; i < 6; i++ {
+		color += string(hexes[rand.Intn(len(hexes))])
+	}
+	return color
+}
+
 // NewModel creates a new pane containing the given model.
 func NewLeaf(m tea.Model) Pane {
 	return Pane{
@@ -40,23 +49,6 @@ func NewNode(direction Direction, children ...Pane) Pane {
 		direction: direction,
 		children:  children,
 	}
-}
-
-func (m Pane) WithDimensions(width, height int) Pane {
-	m.width = width
-	m.height = height
-
-	m = m.recalculateDimensions()
-
-	return m
-}
-
-func (m Pane) WithDirection(direction Direction) Pane {
-	m.direction = direction
-
-	m.recalculateDimensions()
-
-	return m
 }
 
 func (m Pane) Init() tea.Cmd {
@@ -92,15 +84,6 @@ func (m Pane) Update(msg tea.Msg) (Pane, tea.Cmd) {
 	}
 
 	return m, tea.Batch(cmds...)
-}
-
-func randomColorHex() string {
-	hexes := []rune("012345")
-	color := "#"
-	for i := 0; i < 6; i++ {
-		color += string(hexes[rand.Intn(len(hexes))])
-	}
-	return color
 }
 
 func (m Pane) View() string {
