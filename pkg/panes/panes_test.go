@@ -104,3 +104,25 @@ func TestViewVerticalGoesTopToBottom(t *testing.T) {
 
 	assert.True(t, indexTop < indexBottom, "Top child should be before bottom child")
 }
+
+func TestViewTitleIsShown(t *testing.T) {
+	const expectedView = `╭╮title╭─╮
+│testing │
+╰────────╯`
+	dummy := newDummyModel("testing", nil, nil)
+	pane := panes.NewLeaf(dummy).WithName("title").WithDimensions(10, 3)
+
+	assert.Equal(t, expectedView, pane.View())
+}
+
+func TestViewRemovingTitleShowsBorderProperly(t *testing.T) {
+	const expectedView = `╭────────╮
+│testing │
+╰────────╯`
+	dummy := newDummyModel("testing", nil, nil)
+	pane := panes.NewLeaf(dummy).WithName("title").WithDimensions(10, 3)
+
+	pane = pane.WithName("")
+
+	assert.Equal(t, expectedView, pane.View())
+}
