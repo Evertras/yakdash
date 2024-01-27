@@ -1,13 +1,22 @@
 layout:
   screens:
-    - stack: vertical
+    - stack: horizontal
       children:
-        - name: Hostname
+        - stack: vertical
+          children:
+            - name: Hostname
+              module: command
+              config:
+                bash: hostname
+            - name: Date
+              module: command
+              config:
+                interval: 5s
+                bash: date
+        - name: Readme
           module: command
+          style:
+            align-horizontal: left
+            align-vertical: top
           config:
-            bash: hostname
-        - name: Date
-          module: command
-          config:
-            interval: 5s
-            bash: date
+            bash: cat README.md

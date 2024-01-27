@@ -33,7 +33,16 @@ func New(l layout.Root) model {
 			module = text.New(fmt.Sprintf("Error loading module %q: %s", node.Module, err.Error()))
 		}
 
-		return panes.NewLeaf(module).WithName(node.Name)
+		alignV, err := panes.ToAlignmentVertical(node.Style.AlignVertical)
+		if err != nil {
+			module = text.New(fmt.Sprintf("Bad alignment %q: %s", node.Module, err.Error()))
+		}
+		alignH, err := panes.ToAlignmentHorizontal(node.Style.AlignHorizontal)
+		if err != nil {
+			module = text.New(fmt.Sprintf("Bad alignment %q: %s", node.Module, err.Error()))
+		}
+
+		return panes.NewLeaf(module).WithName(node.Name).WithAlignment(alignV, alignH)
 	}
 
 	for _, node := range l.Screens {
