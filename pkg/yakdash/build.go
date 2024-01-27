@@ -1,7 +1,10 @@
 package yakdash
 
 import (
+	"fmt"
+
 	"github.com/evertras/yakdash/pkg/layout"
+	"github.com/evertras/yakdash/pkg/modules/text"
 	"github.com/evertras/yakdash/pkg/panes"
 )
 
@@ -24,7 +27,13 @@ func New(l layout.Root) model {
 			return panes.NewNode(direction, children...)
 		}
 
-		return panes.NewLeaf(loadModule(node))
+		module, err := loadModule(node)
+
+		if err != nil {
+			module = text.New(fmt.Sprintf("Error loading module %q: %s", node.Module, err.Error()))
+		}
+
+		return panes.NewLeaf(module)
 	}
 
 	for _, node := range l.Screens {

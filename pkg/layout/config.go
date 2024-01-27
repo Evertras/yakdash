@@ -23,7 +23,7 @@ type Node struct {
 	Module string `mapstructure:"module,omitempty"`
 
 	// Config is the module-specific configuration.
-	Config interface{} `mapstructure:"config,omitempty"`
+	Config map[string]interface{} `mapstructure:"config,omitempty"`
 
 	//////////////////////////////////////////////
 	// Option 2: contains a sublayout

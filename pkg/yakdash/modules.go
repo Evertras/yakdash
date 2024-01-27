@@ -8,12 +8,12 @@ import (
 	"github.com/evertras/yakdash/pkg/modules/text"
 )
 
-func loadModule(l layout.Node) tea.Model {
+func loadModule(l layout.Node) (tea.Model, error) {
 	switch l.Module {
 	case "clock":
-		return clock.New()
+		return clock.New(l.Config)
 
 	default:
-		return text.New("Unknown module: " + l.Module)
+		return text.New("Unknown module: " + l.Module), nil
 	}
 }

@@ -5,15 +5,20 @@ layout:
       stack: horizontal
       children:
         # Actual pane
-        - name: Local time
-          # Takes up 2 out of the total of 3, using flexbox rules
-          size: 2
-          module: clock
-          config:
-            tz: Asia/Tokyo
+        - stack: vertical
+          children:
+            - name: Local time
+              module: clock
+              config:
+                timezone: Local
+                format: 15:04:05 MST
+            - name: America PST
+              module: clock
+              config:
+                timezone: America/Los_Angeles
+                format: 15:04:05 MST
         # Pane including children stacked top to bottom
         - stack: vertical
-          size: 1
           children:
             - name: Host metrics
               module: host-metrics

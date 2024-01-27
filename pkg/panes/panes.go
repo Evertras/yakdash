@@ -93,7 +93,7 @@ func (m Pane) Update(msg tea.Msg) (Pane, tea.Cmd) {
 }
 
 func randomColorHex() string {
-	hexes := []rune("0123456789abcdef")
+	hexes := []rune("012345")
 	color := "#"
 	for i := 0; i < 6; i++ {
 		color += string(hexes[rand.Intn(len(hexes))])
