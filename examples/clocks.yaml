@@ -1,3 +1,4 @@
+# https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 layout:
   screens:
     # Shows local time as a lone pane at the top, then stacks
@@ -31,15 +32,15 @@ layout:
         - name: Southern America
           stack: horizontal
           children:
-            - name: USA PST
+            - name: Santiago
               module: clock
               config:
-                timezone: America/Los Angeles
+                timezone: America/Santiago
                 format: 01/02 15:04:05 MST
-            - name: USA EST
+            - name: Sao Paulo
               module: clock
               config:
-                timezone: America/New York
+                timezone: America/Sao Paulo
                 format: 01/02 15:04:05 MST
         - name: Europe
           stack: horizontal
