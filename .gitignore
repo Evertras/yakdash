@@ -10,3 +10,6 @@ node_modules
 # Local env vars
 .envrc
 /.direnv
+
+# Playing around with things
+/sandbox
