@@ -44,10 +44,6 @@ func (m Pane) recalculateDimensions() Pane {
 	}
 
 	for i := range m.children {
-		// Shadow to allow adjustment below
-		height := height
-		width := width
-
 		m.children[i] = m.children[i].WithDimensions(width, height)
 	}
 
