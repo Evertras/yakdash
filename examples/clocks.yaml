@@ -1,0 +1,102 @@
+layout:
+  screens:
+    # Shows local time as a lone pane at the top, then stacks
+    # various world times underneath
+    - name: World Times
+      stack: vertical
+      children:
+        - name: Local time
+          module: clock
+          config:
+            timezone: Local
+            format: 01/02 15:04:05 MST
+        - name: USA
+          stack: horizontal
+          children:
+            - name: Alaska
+              module: clock
+              config:
+                timezone: America/Anchorage
+                format: 01/02 15:04:05 MST
+            - name: USA PST
+              module: clock
+              config:
+                timezone: America/Los Angeles
+                format: 01/02 15:04:05 MST
+            - name: USA EST
+              module: clock
+              config:
+                timezone: America/New York
+                format: 01/02 15:04:05 MST
+        - name: Southern America
+          stack: horizontal
+          children:
+            - name: USA PST
+              module: clock
+              config:
+                timezone: America/Los Angeles
+                format: 01/02 15:04:05 MST
+            - name: USA EST
+              module: clock
+              config:
+                timezone: America/New York
+                format: 01/02 15:04:05 MST
+        - name: Europe
+          stack: horizontal
+          children:
+            - name: London
+              module: clock
+              config:
+                timezone: Europe/London
+                format: 01/02 15:04:05 MST
+            - name: Berlin
+              module: clock
+              config:
+                timezone: Europe/Berlin
+                format: 01/02 15:04:05 MST
+            - name: Helsinki
+              module: clock
+              config:
+                timezone: Europe/Helsinki
+                format: 01/02 15:04:05 MST
+        - name: Africa
+          stack: horizontal
+          children:
+            - name: Tunis
+              module: clock
+              config:
+                timezone: Africa/Tunis
+                format: 01/02 15:04:05 MST
+            - name: Cairo
+              module: clock
+              config:
+                timezone: Africa/Cairo
+                format: 01/02 15:04:05 MST
+            - name: Nairobi
+              module: clock
+              config:
+                timezone: Africa/Nairobi
+                format: 01/02 15:04:05 MST
+        - name: Asia
+          stack: horizontal
+          children:
+            - name: Qatar
+              module: clock
+              config:
+                timezone: Asia/Qatar
+                format: 01/02 15:04:05 MST
+            - name: Kolkata
+              module: clock
+              config:
+                timezone: Asia/Kolkata
+                format: 01/02 15:04:05 MST
+            - name: Shanghai
+              module: clock
+              config:
+                timezone: Asia/Shanghai
+                format: 01/02 15:04:05 MST
+            - name: Tokyo
+              module: clock
+              config:
+                timezone: Asia/Tokyo
+                format: 01/02 15:04:05 MST

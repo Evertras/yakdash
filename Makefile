@@ -5,7 +5,7 @@ GO_FILES=$(shell find pkg -name '*.go')
 
 .PHONY: default
 demo: git-hooks
-	@go run ./cmd/yakdash/main.go -c examples/config.yaml
+	@go run ./cmd/yakdash/main.go -c examples/clocks.yaml
 
 ################################################################################
 # Build
