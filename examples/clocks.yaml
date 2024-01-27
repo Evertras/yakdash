@@ -6,8 +6,8 @@ layout:
     - name: World Times
       stack: vertical
       children:
-        - name: Local time
-          module: clock
+        # No title
+        - module: clock
           config:
             timezone: Local
             format: 01/02 15:04:05 MST

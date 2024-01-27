@@ -33,7 +33,7 @@ func New(l layout.Root) model {
 			module = text.New(fmt.Sprintf("Error loading module %q: %s", node.Module, err.Error()))
 		}
 
-		return panes.NewLeaf(module)
+		return panes.NewLeaf(module).WithName(node.Name)
 	}
 
 	for _, node := range l.Screens {

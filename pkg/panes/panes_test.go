@@ -73,7 +73,11 @@ func TestViewParentNodeShowsInnerModelsOfChildren(t *testing.T) {
 	// the view should return the inner model's view
 	dummyLeft := newDummyModel("left", nil, nil)
 	dummyRight := newDummyModel("right", nil, nil)
-	pane := panes.NewNode(panes.DirectionHorizontal, panes.NewLeaf(dummyLeft), panes.NewLeaf(dummyRight)).WithDimensions(100, 1)
+	pane := panes.NewNode(
+		panes.DirectionHorizontal,
+		panes.NewLeaf(dummyLeft),
+		panes.NewLeaf(dummyRight),
+	).WithDimensions(100, 1)
 
 	assert.Contains(t, pane.View(), "left", "View should return left child")
 	assert.Contains(t, pane.View(), "right", "View should return right child")

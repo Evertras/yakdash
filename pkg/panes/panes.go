@@ -1,8 +1,6 @@
 package panes
 
 import (
-	"math/rand"
-
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 )
@@ -19,27 +17,21 @@ type Pane struct {
 	model     tea.Model
 	direction Direction
 
+	name string
+
 	style lipgloss.Style
 
 	width  int
 	height int
 }
 
-func randomColorHex() string {
-	hexes := []rune("012345")
-	color := "#"
-	for i := 0; i < 6; i++ {
-		color += string(hexes[rand.Intn(len(hexes))])
-	}
-	return color
-}
-
 // NewModel creates a new pane containing the given model.
 func NewLeaf(m tea.Model) Pane {
+	borderStyle := lipgloss.NewStyle().Border(lipgloss.RoundedBorder()).BorderTop(false)
+
 	return Pane{
 		model: m,
-		style: lipgloss.NewStyle().Background(lipgloss.Color(randomColorHex())).
-			Align(lipgloss.Center, lipgloss.Center),
+		style: borderStyle.Align(lipgloss.Center, lipgloss.Center),
 	}
 }
 
@@ -49,6 +41,13 @@ func NewNode(direction Direction, children ...Pane) Pane {
 		direction: direction,
 		children:  children,
 	}
+}
+
+func (p Pane) WithName(name string) Pane {
+	p.name = name
+	p.style = p.style.BorderTop(p.name == "")
+
+	return p
 }
 
 func (m Pane) Init() tea.Cmd {
@@ -88,7 +87,10 @@ func (m Pane) Update(msg tea.Msg) (Pane, tea.Cmd) {
 
 func (m Pane) View() string {
 	if m.model != nil {
-		style := m.style.Copy().Width(m.width).Height(m.height)
+		style := m.style.Copy().Width(m.width - 2).Height(m.height - 2)
+		if m.name != "" {
+			return m.genTop() + "\n" + style.Render(m.model.View())
+		}
 		return style.Render(m.model.View())
 	}
 
