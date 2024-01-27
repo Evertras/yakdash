@@ -4,6 +4,9 @@
 # For prettier
 node_modules
 
+# Test output
+*.out
+
 # Local env vars
 .envrc
 /.direnv
