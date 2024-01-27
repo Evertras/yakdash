@@ -9,7 +9,7 @@ import (
 )
 
 func New(l layout.Root) model {
-	var p []panes.Pane
+	var allPanes []panes.Pane
 
 	var makePane func(node layout.Node) panes.Pane
 	makePane = func(node layout.Node) panes.Pane {
@@ -37,11 +37,11 @@ func New(l layout.Root) model {
 	}
 
 	for _, node := range l.Screens {
-		p = append(p, makePane(node))
+		allPanes = append(allPanes, makePane(node))
 	}
 
 	return model{
 		layout:   l,
-		rootPane: makePane(l.Screens[0]),
+		rootPane: allPanes[0],
 	}
 }

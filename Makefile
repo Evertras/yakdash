@@ -28,6 +28,10 @@ coverage.out: $(GO_FILES)
 
 ################################################################################
 # Lint / Format
+.PHONY: lint
+lint: git-hooks
+	golangci-lint run ./...
+
 .PHONY: fmt
 fmt: node_modules git-hooks
 	go fmt ./...

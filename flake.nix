@@ -14,6 +14,7 @@
             go
 
             # For dev tools
+            golangci-lint
             nixfmt
             nodejs_21
           ];

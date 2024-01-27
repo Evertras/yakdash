@@ -35,7 +35,10 @@ func init() {
 
 	flags.StringVarP(&cfgFile, "config", "c", "", "The config file to use")
 
-	viper.BindPFlags(flags)
+	err := viper.BindPFlags(flags)
+	if err != nil {
+		log.Fatal("Failed to bind flags:", err)
+	}
 }
 
 func initConfig() {

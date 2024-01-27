@@ -9,6 +9,8 @@ files=$(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g')
 
 [ -z "$files" ] && exit 0
 
+make lint
+
 echo "$files" | xargs npx prettier --ignore-unknown --write
 echo "$files" | xargs nixfmt
 go fmt ./...
