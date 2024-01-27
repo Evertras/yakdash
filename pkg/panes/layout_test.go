@@ -8,16 +8,14 @@ import (
 
 func TestFullPaneTakesFullDimensions(t *testing.T) {
 	// Ensure a single pane with no children takes the entire dimensions
-	pane := NewLeaf(nil).WithDimensions(100, 100)
-	pane.recalculateDimensions()
-	assert.Equal(t, 100, pane.width, "Wrong width")
+	pane := NewLeaf(nil).WithDimensions(200, 100)
+	assert.Equal(t, 200, pane.width, "Wrong width")
 	assert.Equal(t, 100, pane.height, "Wrong height")
 }
 
 func TestHorizontalPanesSplitHorizontally(t *testing.T) {
 	// Ensure a single pane with ten children horizontally splits the width
 	pane := NewNode(DirectionHorizontal, NewLeaf(nil), NewLeaf(nil)).WithDimensions(100, 100)
-	pane.recalculateDimensions()
 	for i, child := range pane.children {
 		assert.Equal(t, 50, child.width, "Wrong width for child %d", i)
 		assert.Equal(t, 100, child.height, "Wrong height for child %d", i)
@@ -27,7 +25,6 @@ func TestHorizontalPanesSplitHorizontally(t *testing.T) {
 func TestVerticalPanesSplitVertically(t *testing.T) {
 	// Ensure a single pane with ten children vertically splits the height
 	pane := NewNode(DirectionVertical, NewLeaf(nil), NewLeaf(nil)).WithDimensions(100, 100)
-	pane.recalculateDimensions()
 	for i, child := range pane.children {
 		assert.Equal(t, 100, child.width, "Wrong width for child %d", i)
 		assert.Equal(t, 50, child.height, "Wrong height for child %d", i)
@@ -49,8 +46,6 @@ func TestNestedPanesSplitWithinParent(t *testing.T) {
 		NewNode(DirectionVertical, children...),
 	).WithDimensions(100, 100)
 
-	pane.recalculateDimensions()
-
 	mainPane := pane.children[0]
 	sidePane := pane.children[1]
 
@@ -64,4 +59,16 @@ func TestNestedPanesSplitWithinParent(t *testing.T) {
 		assert.Equal(t, 50, child.width, "Wrong width for side pane child %d", i)
 		assert.Equal(t, 10, child.height, "Wrong height for side pane child %d", i)
 	}
+}
+
+func TestChangingDirectionChangesLayout(t *testing.T) {
+	// With a parent pane that contains two leaf children split horizontally,
+	// switch to vertical and make sure the layout changes.
+	pane := NewNode(DirectionHorizontal, NewLeaf(nil), NewLeaf(nil)).WithDimensions(100, 100)
+
+	assert.Equal(t, 50, pane.children[0].width, "Wrong width for child 0")
+
+	pane = pane.WithDirection(DirectionVertical)
+
+	assert.Equal(t, 100, pane.children[0].width, "Wrong width for child 0")
 }

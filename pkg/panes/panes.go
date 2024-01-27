@@ -54,6 +54,8 @@ func (m Pane) WithDimensions(width, height int) Pane {
 func (m Pane) WithDirection(direction Direction) Pane {
 	m.direction = direction
 
+	m.recalculateDimensions()
+
 	return m
 }
 
