@@ -2,6 +2,10 @@
 demo: git-hooks
 	@go run ./cmd/yakdash/main.go -c examples/config.yaml
 
+.PHONY: test
+test: git-hooks
+	@go test ./...
+
 bin/yakdash: git-hooks
 	go build -o bin/yakdash ./cmd/yakdash
 
