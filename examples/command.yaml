@@ -13,10 +13,10 @@ layout:
               config:
                 interval: 5s
                 bash: date
-        - name: Readme
+        - name: Makefile
           module: command
           style:
             align-horizontal: left
             align-vertical: top
           config:
-            bash: cat README.md
+            bash: cat Makefile

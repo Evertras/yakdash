@@ -1,6 +1,7 @@
 package panes
 
 import (
+	"github.com/charmbracelet/bubbles/viewport"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 )
@@ -23,6 +24,8 @@ type Pane struct {
 
 	width  int
 	height int
+
+	textarea viewport.Model
 }
 
 // NewModel creates a new pane containing the given model.
@@ -30,8 +33,9 @@ func NewLeaf(m tea.Model) Pane {
 	borderStyle := lipgloss.NewStyle().Border(lipgloss.RoundedBorder())
 
 	return Pane{
-		model: m,
-		style: borderStyle.Align(lipgloss.Center, lipgloss.Center),
+		model:    m,
+		style:    borderStyle.Align(lipgloss.Center, lipgloss.Center),
+		textarea: viewport.New(0, 0),
 	}
 }
 
@@ -88,10 +92,14 @@ func (m Pane) Update(msg tea.Msg) (Pane, tea.Cmd) {
 func (m Pane) View() string {
 	if m.model != nil {
 		style := m.style.Copy().Width(m.width - 2).Height(m.height - 2)
+		m.textarea.Width = m.width - 2
+		m.textarea.Height = m.height - 2
+		m.textarea.SetContent(m.model.View())
+		innerView := m.textarea.View()
 		if m.name != "" {
-			return m.genTop() + "\n" + style.Render(m.model.View())
+			return m.genTop() + "\n" + style.Render(innerView)
 		}
-		return style.Render(m.model.View())
+		return style.Render(innerView)
 	}
 
 	childrenViews := make([]string, len(m.children))
