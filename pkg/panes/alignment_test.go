@@ -1,7 +1,6 @@
 package panes_test
 
 import (
-	"strings"
 	"testing"
 
 	"github.com/evertras/yakdash/pkg/panes"
@@ -122,7 +121,9 @@ func TestWithAlignment(t *testing.T) {
 
 			p = p.WithAlignment(tc.vertical, tc.horizontal)
 
-			assert.Equal(t, strings.TrimSpace(tc.expectedViewOutput), p.View())
+			// Trim the leading \n in all the test cases, have it
+			// that way for readability
+			assert.Equal(t, tc.expectedViewOutput[1:], p.View())
 		})
 	}
 }
