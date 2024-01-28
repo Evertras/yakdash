@@ -68,6 +68,19 @@ func TestViewLeafNodeShowsInnerModel(t *testing.T) {
 	assert.Contains(t, pane.View(), "testing", "View should return inner model's view")
 }
 
+func TestViewLeafNodeCropsInnerModel(t *testing.T) {
+	// Given a leaf node with a lot of lines of text,
+	// the view should crop the text to the pane's dimensions.
+	const expectedLines = 2
+	text := strings.Repeat("testing\n", 100)
+	pane := panes.NewLeaf(newDummyModel(text, nil, nil)).
+		WithDimensions(10, expectedLines+2) // Account for border
+
+	numTesting := strings.Count(pane.View(), "testing")
+
+	assert.Equal(t, expectedLines, numTesting, "View should only have two lines of text given the dimensions")
+}
+
 func TestViewParentNodeShowsInnerModelsOfChildren(t *testing.T) {
 	// Given a leaf node with a simple model,
 	// the view should return the inner model's view
