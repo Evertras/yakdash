@@ -1,12 +1,17 @@
 package panes
 
-func (m Pane) WithDimensions(width, height int) Pane {
+import tea "github.com/charmbracelet/bubbletea"
+
+type ViewableSize struct {
+	Width  int
+	Height int
+}
+
+func (m Pane) WithDimensions(width, height int) (Pane, tea.Cmd) {
 	m.width = width
 	m.height = height
 
-	m = m.recalculateDimensions()
-
-	return m
+	return m.recalculateDimensions()
 }
 
 func (m Pane) WithDirection(direction Direction) Pane {
@@ -29,10 +34,17 @@ func (m Pane) Children() []Pane {
 	return m.children
 }
 
-func (m Pane) recalculateDimensions() Pane {
+func (m Pane) recalculateDimensions() (Pane, tea.Cmd) {
 	numChildren := len(m.children)
 	if numChildren == 0 {
-		return m
+		var cmd tea.Cmd = nil
+		if m.model != nil {
+			m.model, cmd = m.model.Update(ViewableSize{
+				Width:  m.width - 2,
+				Height: m.height - 2,
+			})
+		}
+		return m, cmd
 	}
 	width := m.width
 	height := m.height
@@ -43,9 +55,15 @@ func (m Pane) recalculateDimensions() Pane {
 		width = width / numChildren
 	}
 
+	var (
+		cmd  tea.Cmd
+		cmds []tea.Cmd
+	)
+
 	for i := range m.children {
-		m.children[i] = m.children[i].WithDimensions(width, height)
+		m.children[i], cmd = m.children[i].WithDimensions(width, height)
+		cmds = append(cmds, cmd)
 	}
 
-	return m
+	return m, tea.Batch(cmds...)
 }

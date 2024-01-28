@@ -59,11 +59,34 @@ func TestUpdateParentNodeSendsUpdateToChildren(t *testing.T) {
 	assert.True(t, sawUpdate, "Model should have seen update")
 }
 
+func TestUpdateSendsResizeEventToLeafNodes(t *testing.T) {
+	// Given a parent node with nested children,
+	// the model should receive the update message
+	var resizeMsg panes.ViewableSize
+	dummy := newDummyModel("testing", nil, func(msg tea.Msg) {
+		switch msg := msg.(type) {
+		case panes.ViewableSize:
+			resizeMsg = msg
+		}
+	})
+	parent := panes.NewNode(panes.DirectionHorizontal, panes.NewLeaf(dummy))
+
+	const (
+		newWidth  = 48
+		newHeight = 24
+	)
+
+	parent.WithDimensions(newWidth, newHeight)
+
+	assert.Equal(t, newWidth-2, resizeMsg.Width, "Model should have seen new width")
+	assert.Equal(t, newHeight-2, resizeMsg.Height, "Model should have seen new height")
+}
+
 func TestViewLeafNodeShowsInnerModel(t *testing.T) {
 	// Given a leaf node with a simple model,
 	// the view should return the inner model's view
 	dummy := newDummyModel("testing", nil, nil)
-	pane := panes.NewLeaf(dummy).WithDimensions(100, 100)
+	pane, _ := panes.NewLeaf(dummy).WithDimensions(100, 100)
 
 	assert.Contains(t, pane.View(), "testing", "View should return inner model's view")
 }
@@ -73,7 +96,7 @@ func TestViewLeafNodeCropsInnerModel(t *testing.T) {
 	// the view should crop the text to the pane's dimensions.
 	const expectedLines = 2
 	text := strings.Repeat("testing\n", 100)
-	pane := panes.NewLeaf(newDummyModel(text, nil, nil)).
+	pane, _ := panes.NewLeaf(newDummyModel(text, nil, nil)).
 		WithDimensions(10, expectedLines+2) // Account for border
 
 	numTesting := strings.Count(pane.View(), "testing")
@@ -86,7 +109,7 @@ func TestViewParentNodeShowsInnerModelsOfChildren(t *testing.T) {
 	// the view should return the inner model's view
 	dummyLeft := newDummyModel("left", nil, nil)
 	dummyRight := newDummyModel("right", nil, nil)
-	pane := panes.NewNode(
+	pane, _ := panes.NewNode(
 		panes.DirectionHorizontal,
 		panes.NewLeaf(dummyLeft),
 		panes.NewLeaf(dummyRight),
@@ -99,7 +122,7 @@ func TestViewParentNodeShowsInnerModelsOfChildren(t *testing.T) {
 func TestViewHorizontalGoesLeftToRight(t *testing.T) {
 	dummyLeft := newDummyModel("left", nil, nil)
 	dummyRight := newDummyModel("right", nil, nil)
-	pane := panes.NewNode(
+	pane, _ := panes.NewNode(
 		panes.DirectionHorizontal,
 		panes.NewLeaf(dummyLeft),
 		panes.NewLeaf(dummyRight),
@@ -114,7 +137,7 @@ func TestViewHorizontalGoesLeftToRight(t *testing.T) {
 func TestViewVerticalGoesTopToBottom(t *testing.T) {
 	dummyTop := newDummyModel("top", nil, nil)
 	dummyBottom := newDummyModel("bottom", nil, nil)
-	pane := panes.NewNode(panes.DirectionVertical, panes.NewLeaf(dummyTop), panes.NewLeaf(dummyBottom)).WithDimensions(10, 100)
+	pane, _ := panes.NewNode(panes.DirectionVertical, panes.NewLeaf(dummyTop), panes.NewLeaf(dummyBottom)).WithDimensions(10, 100)
 
 	indexTop := strings.Index(pane.View(), "top")
 	indexBottom := strings.Index(pane.View(), "bottom")
@@ -127,7 +150,7 @@ func TestViewTitleIsShown(t *testing.T) {
 │testing │
 ╰────────╯`
 	dummy := newDummyModel("testing", nil, nil)
-	pane := panes.NewLeaf(dummy).WithName("title").WithDimensions(10, 3)
+	pane, _ := panes.NewLeaf(dummy).WithName("title").WithDimensions(10, 3)
 
 	assert.Equal(t, expectedView, pane.View())
 }
@@ -137,7 +160,7 @@ func TestViewNoTitleShowsBorderProperly(t *testing.T) {
 │testing │
 ╰────────╯`
 	dummy := newDummyModel("testing", nil, nil)
-	pane := panes.NewLeaf(dummy).WithDimensions(10, 3)
+	pane, _ := panes.NewLeaf(dummy).WithDimensions(10, 3)
 
 	assert.Equal(t, expectedView, pane.View())
 }
@@ -147,7 +170,7 @@ func TestViewRemovingTitleShowsBorderProperly(t *testing.T) {
 │testing │
 ╰────────╯`
 	dummy := newDummyModel("testing", nil, nil)
-	pane := panes.NewLeaf(dummy).WithName("title").WithDimensions(10, 3)
+	pane, _ := panes.NewLeaf(dummy).WithName("title").WithDimensions(10, 3)
 
 	pane = pane.WithName("")
 

@@ -38,7 +38,8 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 
 	case tea.WindowSizeMsg:
-		m.rootPane = m.rootPane.WithDimensions(msg.Width, msg.Height)
+		m.rootPane, cmd = m.rootPane.WithDimensions(msg.Width, msg.Height)
+		cmds = append(cmds, cmd)
 	}
 
 	m.rootPane, cmd = m.rootPane.Update(msg)

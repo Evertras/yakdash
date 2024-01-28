@@ -118,7 +118,7 @@ func TestWithAlignment(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			p := panes.NewLeaf(newDummyModel("foo", nil, nil)).WithDimensions(14, 5)
+			p, _ := panes.NewLeaf(newDummyModel("foo", nil, nil)).WithDimensions(14, 5)
 
 			p = p.WithAlignment(tc.vertical, tc.horizontal)
 

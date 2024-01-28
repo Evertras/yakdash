@@ -19,13 +19,17 @@ func newDummyModel(text string, initCmd func() tea.Msg, updateCallback func(tea.
 }
 
 func (m dummyModel) Init() tea.Cmd {
-	m.initCmd()
+	if m.initCmd != nil {
+		m.initCmd()
+	}
 
 	return m.initCmd
 }
 
 func (m dummyModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-	m.updateCallback(msg)
+	if m.updateCallback != nil {
+		m.updateCallback(msg)
+	}
 
 	return m, nil
 }
