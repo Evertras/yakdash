@@ -8,15 +8,10 @@ layout:
               module: command
               config:
                 bash: hostname
-            - name: Date
-              module: command
-              config:
-                interval: 5s
-                bash: date
-        - name: Makefile
-          module: command
+        - name: Dir
           style:
             align-horizontal: left
-            align-vertical: top
+            align-vertical: bottom
+          module: command
           config:
-            bash: cat Makefile
+            bash: ls --color

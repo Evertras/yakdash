@@ -1,6 +1,8 @@
 package panes
 
 import (
+	"strings"
+
 	"github.com/charmbracelet/bubbles/viewport"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
@@ -95,7 +97,7 @@ func (m Pane) View() string {
 		m.textarea.Width = m.width - 2
 		m.textarea.Height = m.height - 2
 		m.textarea.SetContent(m.model.View())
-		innerView := m.textarea.View()
+		innerView := strings.TrimSpace(m.textarea.View())
 		if m.name != "" {
 			return m.genTop() + "\n" + style.Render(innerView)
 		}
