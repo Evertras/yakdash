@@ -6,7 +6,7 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 
 	"github.com/evertras/yakdash/pkg/id"
-	"github.com/evertras/yakdash/pkg/modules/command/captured"
+	"github.com/evertras/yakdash/pkg/sources/capturedexec"
 )
 
 type commandResult struct {
@@ -20,7 +20,7 @@ func (m model) runCommand() tea.Cmd {
 	return func() tea.Msg {
 		ctx, cancel := context.WithTimeout(context.Background(), m.config.interval)
 		defer cancel()
-		cmd := captured.New(ctx, "bash", "-c", m.config.Bash)
+		cmd := capturedexec.New(ctx, "bash", "-c", m.config.Bash)
 
 		err := cmd.Run()
 

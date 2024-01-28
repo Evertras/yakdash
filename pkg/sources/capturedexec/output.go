@@ -1,4 +1,4 @@
-package captured
+package capturedexec
 
 import "sync"
 
