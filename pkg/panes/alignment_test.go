@@ -103,6 +103,17 @@ func TestWithAlignment(t *testing.T) {
 │         foo│
 ╰────────────╯`,
 		},
+		{
+			name:       "top right",
+			vertical:   panes.AlignmentVerticalTop,
+			horizontal: panes.AlignmentHorizontalRight,
+			expectedViewOutput: `
+╭────────────╮
+│         foo│
+│            │
+│            │
+╰────────────╯`,
+		},
 	}
 
 	for _, tc := range testCases {

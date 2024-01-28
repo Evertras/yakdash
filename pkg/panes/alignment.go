@@ -77,7 +77,7 @@ func (m Pane) WithAlignment(vertical AlignmentVertical, horizontal AlignmentHori
 		lipglossH = lipgloss.Right
 	}
 
-	m.style = m.style.Align(lipglossV, lipglossH)
+	m.style = m.style.Align(lipglossH, lipglossV)
 
 	return m
 }
