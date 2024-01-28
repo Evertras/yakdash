@@ -3,11 +3,11 @@ GO_FILES=$(shell find pkg -name '*.go')
 ################################################################################
 # Demo
 
-.PHONY: default
-demo: git-hooks
+.PHONY: demo-clocks
+demo-clocks: git-hooks
 	@go run ./cmd/yakdash/main.go -c examples/clocks.yaml
 
-.PHONY: default
+.PHONY: demo-command
 demo-command: git-hooks
 	@go run ./cmd/yakdash/main.go -c examples/command.yaml
 
