@@ -11,7 +11,7 @@ layout:
         - name: Dir
           style:
             align-horizontal: left
-            align-vertical: bottom
           module: command
           config:
+            # Works with colors
             bash: ls --color
