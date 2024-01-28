@@ -2,7 +2,7 @@ package panes
 
 import tea "github.com/charmbracelet/bubbletea"
 
-type ViewableSize struct {
+type ViewableSizeMsg struct {
 	Width  int
 	Height int
 }
@@ -39,7 +39,7 @@ func (m Pane) recalculateDimensions() (Pane, tea.Cmd) {
 	if numChildren == 0 {
 		var cmd tea.Cmd = nil
 		if m.model != nil {
-			m.model, cmd = m.model.Update(ViewableSize{
+			m.model, cmd = m.model.Update(ViewableSizeMsg{
 				Width:  m.width - 2,
 				Height: m.height - 2,
 			})

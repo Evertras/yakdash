@@ -62,10 +62,10 @@ func TestUpdateParentNodeSendsUpdateToChildren(t *testing.T) {
 func TestUpdateSendsResizeEventToLeafNodes(t *testing.T) {
 	// Given a parent node with nested children,
 	// the model should receive the update message
-	var resizeMsg panes.ViewableSize
+	var resizeMsg panes.ViewableSizeMsg
 	dummy := newDummyModel("testing", nil, func(msg tea.Msg) {
 		switch msg := msg.(type) {
-		case panes.ViewableSize:
+		case panes.ViewableSizeMsg:
 			resizeMsg = msg
 		}
 	})
