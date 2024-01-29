@@ -1,0 +1,73 @@
+layout:
+  screens:
+    - stack: vertical
+      children:
+        - stack: horizontal
+          children:
+            - name: "TL"
+              module: text
+              style:
+                align-vertical: top
+                align-horizontal: left
+              config:
+                text: "Top left"
+            - name: "TC"
+              module: text
+              config:
+                text: "Top center"
+              style:
+                align-vertical: top
+                align-horizontal: center
+            - name: "TR"
+              module: text
+              config:
+                text: "Top right"
+              style:
+                align-vertical: top
+                align-horizontal: right
+        - stack: horizontal
+          children:
+            - name: "CL"
+              module: text
+              style:
+                align-vertical: center
+                align-horizontal: left
+              config:
+                text: "Center left"
+            - name: "CC"
+              module: text
+              config:
+                text: "Center center"
+              style:
+                align-vertical: center
+                align-horizontal: center
+            - name: "CR"
+              module: text
+              config:
+                text: "Center right"
+              style:
+                align-vertical: center
+                align-horizontal: right
+        - stack: horizontal
+          children:
+            - name: "BL"
+              module: text
+              style:
+                align-vertical: bottom
+                align-horizontal: left
+              config:
+                text: "Bottom left"
+            - name: "BC"
+              module: text
+              config:
+                text: "Bottom center"
+              style:
+                align-vertical: bottom
+                align-horizontal: center
+            - name: "BR"
+              module: text
+              config:
+                text: "Bottom right"
+              style:
+                align-vertical: bottom
+                align-horizontal: right

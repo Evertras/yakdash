@@ -11,6 +11,10 @@ demo-clocks: git-hooks
 demo-command: git-hooks
 	@go run ./cmd/yakdash/main.go -c examples/command.yaml
 
+.PHONY: demo-alignment
+demo-alignment: git-hooks
+	@go run ./cmd/yakdash/main.go -c examples/alignment.yaml
+
 ################################################################################
 # Build
 bin/yakdash: git-hooks $(GO_FILES)
