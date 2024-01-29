@@ -8,10 +8,14 @@ layout:
               module: command
               config:
                 bash: hostname
-        - name: Dir
-          style:
-            align-horizontal: left
+            - name: Dir
+              style:
+                align-horizontal: left
+              module: command
+              config:
+                # Works with colors
+                bash: ls --color
+        - name: df
           module: command
           config:
-            # Works with colors
-            bash: ls --color
+            bash: df -h
