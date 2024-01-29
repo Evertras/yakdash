@@ -17,7 +17,10 @@ func loadModule(l layout.Node) (tea.Model, error) {
 	case "command":
 		return command.New(l.Config)
 
+	case "text":
+		return text.New(l.Config)
+
 	default:
-		return text.New("Unknown module: " + l.Module), nil
+		return text.NewPlainText("Unknown module: " + l.Module), nil
 	}
 }

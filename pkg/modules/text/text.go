@@ -1,12 +1,30 @@
 package text
 
-import tea "github.com/charmbracelet/bubbletea"
+import (
+	"fmt"
+
+	tea "github.com/charmbracelet/bubbletea"
+	"github.com/mitchellh/mapstructure"
+)
 
 type model struct {
 	text string
 }
 
-func New(text string) model {
+func New(cfg map[string]interface{}) (model, error) {
+	var config config
+	err := mapstructure.Decode(cfg, &config)
+
+	if err != nil {
+		return model{}, fmt.Errorf("failed to parse config: %w", err)
+	}
+
+	return model{
+		text: config.Text,
+	}, nil
+}
+
+func NewPlainText(text string) model {
 	return model{
 		text: text,
 	}
