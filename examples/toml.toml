@@ -1,0 +1,25 @@
+[[layout.screens]]
+stack = "horizontal"
+
+# Left half, split into two panes stacked on top of each other
+[[layout.screens.children]]
+stack = "vertical"
+
+[[layout.screens.children.children]]
+name = "Hostname"
+module = "command"
+config.bash = "hostname"
+
+[[layout.screens.children.children]]
+name = "Dir"
+module = "command"
+style.align-horizontal = "left"
+config.bash = "ls --color"
+
+# Right half, all to itself
+[[layout.screens.children]]
+name = "Disk space"
+module = "command"
+interval = "1m"
+style.align-horizontal = "left"
+config.bash = "df -h"
