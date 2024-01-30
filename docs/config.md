@@ -1,9 +1,10 @@
 # Config
 
-_NOTE: none of this is implemented and is subject to change.
+_NOTE: none of this is finalized and is subject to change.
 Just getting a feel for what it might look like._
 
-Configuration can be provided in YAML, JSON, or TOML.
+Configuration can be provided in YAML, JSON, TOML, HCL, INI.
+Examples are in [the examples directory](../examples/).
 
 ## Layout
 
@@ -29,14 +30,10 @@ layout:
         # Pane including children stacked top to bottom
         - stack: vertical
           children:
-            - name: Host metrics
-              module: host-metrics
+            - name: Disk free
+              module: command
               config:
-                cpu:
-                memory:
-                  unit: mb
-                disk:
-                  unit: mb
+                bash: df -h
             - name: Weather
               module: graph
               config:
