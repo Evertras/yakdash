@@ -1,5 +1,6 @@
 # Build outputs
 /bin
+/result
 
 # For prettier
 node_modules
